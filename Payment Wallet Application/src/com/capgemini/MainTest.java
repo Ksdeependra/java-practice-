@@ -13,19 +13,25 @@ import com.capgemini.repo.WalletRepoImpl;
 import com.capgemini.service.WalletService;
 import com.capgemini.service.WalletServiceImpl;
 
-class MainTest {
+class JunitTestCases {
 	WalletRepo repo=new WalletRepoImpl();
 	WalletService s=new WalletServiceImpl(repo);
 	
 
-	@Test(expected = com.capgemini.exception.NameNotNullException.class)
-	public void whennameisnotPassedThrowException() throws NameNotNullException {
+	@Test
+	public void whenvalidinfoispasseddepositsuccessfully() throws NameNotNullException {
 		
 			s.createAccount("sushil", "9854121412", BigDecimal.valueOf(200));
-			}
+		
 
-	@Test(expected = com.capgemini.exception.NameNotNullException.class)
-	public void whennameisnotPassedThrowException() throws NameNotNullException {
+
+}
+
+	@Test
+	public void whenvalidinfoispassedwithdrawsuccessfully() throws NameNotNullException {
 		
-			s.createAccount("sushil", "9854121412", BigDecimal.valueOf(200));
+			s.createAccount("sushil", "9854121412", BigDecimal.valueOf(2000));
+			s.withdrawAmount( "9854121412", BigDecimal.valueOf(200));
+			
+}
 }
