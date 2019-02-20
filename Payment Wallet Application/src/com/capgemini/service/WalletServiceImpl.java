@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import com.capgemini.beans.Customer;
 import com.capgemini.beans.Wallet;
+import com.capgemini.exception.NameNotNullException;
 import com.capgemini.repo.WalletRepo;
 
 public class WalletServiceImpl implements WalletService{
@@ -16,11 +17,13 @@ public class WalletServiceImpl implements WalletService{
 	}
 
 	@Override
-	public Customer createAccount(String name, String mobNo, BigDecimal amount) {
-		
+	public Customer createAccount(String name, String mobNo, BigDecimal amount) throws NameNotNullException
+	{ 
 		Wallet w=new Wallet();
-		w.setAmount(amount);
-		Customer c=new Customer(name, mobNo, w);
+		if(name=="")
+			throw new NameNotNullException();
+	w.setAmount(amount);
+	Customer c=new Customer(name, mobNo, w);
 		if(walletrepo.save(c))
 		{
 			return c;
@@ -28,6 +31,8 @@ public class WalletServiceImpl implements WalletService{
 		return null;
 		
 	}
+	
+
 	@Override
 	public Customer depositAmount(String mobNo, BigDecimal amount) {
 		Customer c=walletrepo.findOne(mobNo);
